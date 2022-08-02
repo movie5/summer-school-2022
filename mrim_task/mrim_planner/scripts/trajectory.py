@@ -192,8 +192,12 @@ class TrajectoryUtils():
             # interpolate headings
             for i in range(1, len(subtraj) - 1):
 
-                subtraj_0 = subtraj[i - 1].point
-                subtraj_1 = subtraj[i].point
+                # subtraj_0 = subtraj[i - 1].point
+                # subtraj_1 = subtraj[i].point
+
+                interpoint_distance = self.getLength([subtraj[i - 1], subtraj[i]])
+                distance_fraction = interpoint_distance / subtraj_len
+                new_hdg = wrapAngle(subtraj[i-1].heading + d_hdg*distance_fraction)
 
                 # [STUDENTS TODO, COMPULSORY] Implement heading interpolation here
                 # Tips:
@@ -201,7 +205,8 @@ class TrajectoryUtils():
                 #  - do not forget to wrap angle to <-pi, pi) (see/use wrapAngle() in utils.py)
 
                 # [STUDENTS TODO] Change variable 'hdg_interp', nothing else
-                hdg_interp = waypoints[0].heading
+                hdg_interp = new_hdg
+                # hdg_interp = waypoints[0].heading
 
                 # replace heading
                 hdg_from   = hdg_interp
